@@ -1,37 +1,55 @@
 #include <stdio.h>
 
 int main() {
-    int n = 3, m = 4;
+    int n, m;
 
-    int A[3][4] = {
-        {3, -2, 4, 9},
-        {0, 3, 10, 3},
-        {5, -4, -6, 0}
-    };
+    printf("Введіть кількість рядків n: ");
+    scanf("%d", &n);
+    printf("Введіть кількість стовпців m: ");
+    scanf("%d", &m);
+    int a[n][m];
+    printf("\nВведення елементів матриці:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            printf("a[%d][%d] = ", i, j);
+            scanf("%d", &a[i][j]);
+        }
+    }
+    // Пошук рядків з нулем
+    printf("\nНомера рядків з хоча б одним нулем:\n");
+    int found = 0;  
+    for (int i = 0; i < n; i++) {
+        int hasZero = 0;       //чи є 0 у рядку
+        for (int j = 0; j < m; j++) {
+            if (a[i][j] == 0) {
+                hasZero = 1;       //ставимо прапорець
+                break; 
+            }
+        }
+        if (hasZero) {
+            printf("%d ", i + 1);     //виводимо номер рядка
+            found = 1;
+        }
+    }
+    printf("\n\nРядки:\n");
+    for (int i = 0; i < n; i++) {
+        int hasZero = 0;
 
-    int hasZero[3] = {0}; // масив для збереження рядків з нулем
-    for (int i = 0; i < n; i++) {             //цикл по рядках
-        for (int j = 0; j < m; j++) {         //цикл по елементах рядка
-            if (A[i][j] == 0) {               //якщо є 0
-                hasZero[i] = 1;               //запамятали що в рядку є 0
+        for (int j = 0; j < m; j++) {    //перевіряємо рядок
+            if (a[i][j] == 0) {
+                hasZero = 1;
                 break;
             }
         }
-    }
-    printf("Номера рядків:\n");
-    for (int i = 0; i < n; i++) {
-        if (hasZero[i]) {
-            printf("%d ", i + 1);
-        }
-    }
-    printf("\nРядки:\n");
-    for (int i = 0; i < n; i++) {
-        if (hasZero[i]) {
+        if (hasZero) {
             for (int j = 0; j < m; j++) {
-                printf("%d ", A[i][j]);
+                printf("%d ", a[i][j]);
             }
-            printf("\n");                    // перехід на новий рядок після кожного рядка
+            printf("\n");
         }
+    }
+    if (!found) {
+        printf("Немає рядків з нульовими елементами.\n");
     }
 
     return 0;
